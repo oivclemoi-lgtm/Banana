@@ -1,81 +1,83 @@
-local player = game.Players.LocalPlayer
-local PlayerGui = player:WaitForChild("PlayerGui")
+-- Services
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local player = Players.LocalPlayer
 
 -- ScreenGui
 local gui = Instance.new("ScreenGui")
-gui.Name = "BananaDarkLoading"
+gui.Name = "BananaLoading"
 gui.ResetOnSpawn = false
-gui.Parent = PlayerGui
+gui.Parent = player:WaitForChild("PlayerGui")
 
--- Overlay đen toàn màn hình
-local overlay = Instance.new("Frame", gui)
-overlay.Size = UDim2.new(1, 0, 1, 0)
-overlay.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-overlay.BackgroundTransparency = 0.2
-overlay.BorderSizePixel = 0
+-- Dark background
+local bg = Instance.new("Frame", gui)
+bg.Size = UDim2.new(1, 0, 1, 0)
+bg.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+bg.BackgroundTransparency = 0
 
--- Khung chính giữa
-local frame = Instance.new("Frame", overlay)
-frame.Size = UDim2.new(0, 420, 0, 160)
-frame.Position = UDim2.new(0.5, -210, 0.5, -80)
-frame.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
-frame.BorderSizePixel = 2
-frame.BorderColor3 = Color3.fromRGB(255, 215, 0)
+-- Loading box
+local box = Instance.new("Frame", bg)
+box.Size = UDim2.new(0, 400, 0, 180)
+box.Position = UDim2.new(0.5, -200, 0.5, -90)
+box.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+box.BorderColor3 = Color3.fromRGB(255, 215, 0)
+box.BorderSizePixel = 2
 
-local corner = Instance.new("UICorner", frame)
-corner.CornerRadius = UDim.new(0, 16)
+-- Title
+local title = Instance.new("TextLabel", box)
+title.Size = UDim2.new(1, 0, 0, 40)
+title.BackgroundTransparency = 1
+title.Text = "🍌 Banana Cat Hub"
+title.TextColor3 = Color3.fromRGB(255, 215, 0)
+title.Font = Enum.Font.GothamBold
+title.TextSize = 22
 
--- Viền glow
-local stroke = Instance.new("UIStroke", frame)
-stroke.Thickness = 2
-stroke.Color = Color3.fromRGB(255, 215, 0)
-stroke.Transparency = 0.1
-
--- Icon mèo
-local img = Instance.new("ImageLabel", frame)
-img.Size = UDim2.new(0, 60, 0, 60)
-img.Position = UDim2.new(0, 20, 0.5, -30)
-img.BackgroundTransparency = 1
-img.Image = "rbxassetid://3926305904"
-
--- Text loading
-local text = Instance.new("TextLabel", frame)
-text.Size = UDim2.new(1, -110, 0, 40)
-text.Position = UDim2.new(0, 100, 0, 30)
-text.BackgroundTransparency = 1
-text.TextColor3 = Color3.fromRGB(255, 215, 0)
-text.Font = Enum.Font.GothamBold
-text.TextScaled = true
-text.TextXAlignment = Enum.TextXAlignment.Left
-text.Text = "Loading... 0%"
-
--- Thanh loading nền
-local barBg = Instance.new("Frame", frame)
-barBg.Size = UDim2.new(1, -40, 0, 12)
-barBg.Position = UDim2.new(0, 20, 1, -35)
+-- Loading bar background
+local barBg = Instance.new("Frame", box)
+barBg.Size = UDim2.new(0, 360, 0, 18)
+barBg.Position = UDim2.new(0.5, -180, 0, 70)
 barBg.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
 barBg.BorderSizePixel = 0
 
-local barCorner = Instance.new("UICorner", barBg)
-barCorner.CornerRadius = UDim.new(0, 8)
-
--- Thanh chạy
+-- Loading bar
 local bar = Instance.new("Frame", barBg)
 bar.Size = UDim2.new(0, 0, 1, 0)
 bar.BackgroundColor3 = Color3.fromRGB(255, 215, 0)
 bar.BorderSizePixel = 0
 
-local barCorner2 = Instance.new("UICorner", bar)
-barCorner2.CornerRadius = UDim.new(0, 8)
+-- Percent text
+local percent = Instance.new("TextLabel", box)
+percent.Size = UDim2.new(1, 0, 0, 30)
+percent.Position = UDim2.new(0, 0, 0, 95)
+percent.BackgroundTransparency = 1
+percent.Text = "Loading... 0%"
+percent.TextColor3 = Color3.fromRGB(255, 255, 255)
+percent.Font = Enum.Font.Gotham
+percent.TextSize = 16
 
--- Fake loading 0 -> 100%
+-- Note / caption
+local note = Instance.new("TextLabel", box)
+note.Size = UDim2.new(1, -20, 0, 50)
+note.Position = UDim2.new(0, 10, 1, -55)
+note.BackgroundTransparency = 1
+note.TextWrapped = true
+note.Text = "Cảm ơn bạn đã đến với script của Phongcuto.\nChúc bạn sử dụng script vui vẻ!\nLưu ý: Đây là Banana Free Premium đầy đủ chức năng."
+note.TextColor3 = Color3.fromRGB(200, 200, 200)
+note.Font = Enum.Font.Gotham
+note.TextSize = 13
+
+-- Loading animation (10 seconds)
+local totalTime = 10
 for i = 0, 100 do
-    text.Text = "Loading... " .. i .. "%"
-    bar.Size = UDim2.new(i / 100, 0, 1, 0)
-    task.wait(0.05) -- chỉnh nhanh/chậm tại đây
+	bar.Size = UDim2.new(i/100, 0, 1, 0)
+	percent.Text = "Loading... "..i.."%"
+	task.wait(totalTime / 100)
 end
 
-task.wait(0.4)
+-- Small delay
+task.wait(0.5)
 
--- Kick (câu tiếng Anh đầu tiên)
-player:Kick("You have been kicked from this experience.\nReason: Suspected cheating.")
+-- Kick with Roblox-like ban reason
+player:Kick(
+	"You have been permanently banned from this experience.\n(Error Code: 267)"
+)
