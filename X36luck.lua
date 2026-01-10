@@ -1,84 +1,83 @@
--- x36luck 🍀 | Simple UI | Delta OK
+-- x36 LUCK 🍀 | Clean UI | Rebuild
 
-local Players = game:GetService("Players")
-local player = Players.LocalPlayer
+local plr = game:GetService("Players").LocalPlayer
 
 -- GUI
 local gui = Instance.new("ScreenGui")
-gui.Name = "x36luckUI"
+gui.Name = "x36luck_rebuild"
 gui.ResetOnSpawn = false
-gui.Parent = player:WaitForChild("PlayerGui")
+gui.Parent = plr:WaitForChild("PlayerGui")
 
--- MAIN FRAME
-local frame = Instance.new("Frame", gui)
-frame.Size = UDim2.new(0, 260, 0, 150)
-frame.Position = UDim2.new(0.5, -130, 0.5, -75)
-frame.BackgroundColor3 = Color3.fromRGB(40, 120, 60)
-frame.BackgroundTransparency = 0.15
-frame.BorderSizePixel = 0
-frame.Active = true
-frame.Draggable = true
-Instance.new("UICorner", frame).CornerRadius = UDim.new(0, 18)
+-- MAIN PANEL
+local main = Instance.new("Frame", gui)
+main.Size = UDim2.new(0, 420, 0, 220)
+main.Position = UDim2.new(0.5, -210, 0.5, -110)
+main.BackgroundColor3 = Color3.fromRGB(10, 35, 20)
+main.BackgroundTransparency = 0.2
+main.BorderSizePixel = 0
+main.Active = true
+main.Draggable = true
+Instance.new("UICorner", main).CornerRadius = UDim.new(0, 22)
 
--- BORDER GOLD
-local stroke = Instance.new("UIStroke", frame)
+-- GOLD BORDER
+local stroke = Instance.new("UIStroke", main)
 stroke.Color = Color3.fromRGB(255, 215, 0)
-stroke.Thickness = 2
+stroke.Thickness = 3
 
 -- TITLE
-local title = Instance.new("TextLabel", frame)
-title.Size = UDim2.new(1, -40, 0, 35)
-title.Position = UDim2.new(0, 10, 0, 5)
+local title = Instance.new("TextLabel", main)
+title.Size = UDim2.new(1, 0, 0, 50)
+title.Position = UDim2.new(0, 0, 0, 10)
 title.BackgroundTransparency = 1
-title.Text = "🍀 x36luck"
-title.Font = Enum.Font.GothamBold
-title.TextSize = 20
-title.TextColor3 = Color3.fromRGB(200,255,200)
-title.TextXAlignment = Enum.TextXAlignment.Left
+title.Text = "🍀  x36 LUCK"
+title.Font = Enum.Font.GothamBlack
+title.TextSize = 26
+title.TextColor3 = Color3.fromRGB(170, 255, 170)
+title.TextStrokeTransparency = 0.6
 
--- CLOSE BUTTON
-local close = Instance.new("TextButton", frame)
-close.Size = UDim2.new(0, 28, 0, 28)
-close.Position = UDim2.new(1, -34, 0, 6)
+-- CLOSE X
+local close = Instance.new("TextButton", main)
+close.Size = UDim2.new(0, 36, 0, 36)
+close.Position = UDim2.new(1, -46, 0, 12)
 close.Text = "✕"
-close.Font = Enum.Font.GothamBold
-close.TextSize = 18
-close.TextColor3 = Color3.fromRGB(255,220,120)
-close.BackgroundColor3 = Color3.fromRGB(60,100,60)
+close.Font = Enum.Font.GothamBlack
+close.TextSize = 20
+close.TextColor3 = Color3.fromRGB(255, 220, 120)
+close.BackgroundColor3 = Color3.fromRGB(20, 60, 35)
 close.BorderSizePixel = 0
 Instance.new("UICorner", close).CornerRadius = UDim.new(1,0)
 
 -- STATUS
-local status = Instance.new("TextLabel", frame)
-status.Size = UDim2.new(1, 0, 0, 25)
-status.Position = UDim2.new(0, 0, 0, 45)
+local status = Instance.new("TextLabel", main)
+status.Size = UDim2.new(1, 0, 0, 30)
+status.Position = UDim2.new(0, 0, 0, 80)
 status.BackgroundTransparency = 1
-status.Text = "STATUS: OFF"
-status.Font = Enum.Font.Gotham
-status.TextSize = 14
-status.TextColor3 = Color3.fromRGB(255,180,180)
+status.Text = "STATUS : OFF"
+status.Font = Enum.Font.GothamBold
+status.TextSize = 18
+status.TextColor3 = Color3.fromRGB(255, 160, 160)
 
--- TOGGLE BUTTON
-local toggle = Instance.new("TextButton", frame)
-toggle.Size = UDim2.new(0.7, 0, 0, 40)
-toggle.Position = UDim2.new(0.15, 0, 0, 80)
+-- TOGGLE
+local toggle = Instance.new("TextButton", main)
+toggle.Size = UDim2.new(0, 200, 0, 55)
+toggle.Position = UDim2.new(0.5, -100, 0, 130)
 toggle.Text = "ON"
-toggle.Font = Enum.Font.GothamBold
-toggle.TextSize = 16
-toggle.TextColor3 = Color3.fromRGB(30,60,30)
-toggle.BackgroundColor3 = Color3.fromRGB(120,255,120)
+toggle.Font = Enum.Font.GothamBlack
+toggle.TextSize = 20
+toggle.TextColor3 = Color3.fromRGB(20, 50, 20)
+toggle.BackgroundColor3 = Color3.fromRGB(120, 255, 140)
 toggle.BorderSizePixel = 0
 Instance.new("UICorner", toggle).CornerRadius = UDim.new(1,0)
 
 -- ICON (SHOW AGAIN)
 local icon = Instance.new("TextButton", gui)
-icon.Size = UDim2.new(0, 46, 0, 46)
-icon.Position = UDim2.new(0, 15, 0.5, -23)
+icon.Size = UDim2.new(0, 60, 0, 60)
+icon.Position = UDim2.new(0, 20, 0.5, -30)
 icon.Text = "🍀"
-icon.Font = Enum.Font.GothamBold
-icon.TextSize = 22
-icon.TextColor3 = Color3.fromRGB(200,255,200)
-icon.BackgroundColor3 = Color3.fromRGB(40,100,60)
+icon.Font = Enum.Font.GothamBlack
+icon.TextSize = 26
+icon.TextColor3 = Color3.fromRGB(170,255,170)
+icon.BackgroundColor3 = Color3.fromRGB(10, 40, 25)
 icon.BackgroundTransparency = 0.15
 icon.BorderSizePixel = 0
 icon.Visible = false
@@ -88,32 +87,32 @@ Instance.new("UICorner", icon).CornerRadius = UDim.new(1,0)
 
 local iconStroke = Instance.new("UIStroke", icon)
 iconStroke.Color = Color3.fromRGB(255,215,0)
-iconStroke.Thickness = 2
+iconStroke.Thickness = 3
 
 -- LOGIC
-local enabled = false
+local on = false
 
 toggle.MouseButton1Click:Connect(function()
-	enabled = not enabled
-	if enabled then
-		status.Text = "STATUS: ON (x36🍀)"
-		status.TextColor3 = Color3.fromRGB(120,255,120)
+	on = not on
+	if on then
+		status.Text = "STATUS : ON  (x36 🍀)"
+		status.TextColor3 = Color3.fromRGB(150,255,150)
 		toggle.Text = "OFF"
 		toggle.BackgroundColor3 = Color3.fromRGB(255,220,120)
 	else
-		status.Text = "STATUS: OFF"
-		status.TextColor3 = Color3.fromRGB(255,180,180)
+		status.Text = "STATUS : OFF"
+		status.TextColor3 = Color3.fromRGB(255,160,160)
 		toggle.Text = "ON"
-		toggle.BackgroundColor3 = Color3.fromRGB(120,255,120)
+		toggle.BackgroundColor3 = Color3.fromRGB(120,255,140)
 	end
 end)
 
 close.MouseButton1Click:Connect(function()
-	frame.Visible = false
+	main.Visible = false
 	icon.Visible = true
 end)
 
 icon.MouseButton1Click:Connect(function()
 	icon.Visible = false
-	frame.Visible = true
+	main.Visible = true
 end)
