@@ -1,79 +1,75 @@
--- Banana Simple Toggle UI
--- Content: x36luck🍀
+-- 🍀 x36 Luck Toggle Script
 
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
-local PlayerGui = player:WaitForChild("PlayerGui")
+local StarterGui = game:GetService("StarterGui")
 
--- Xóa UI cũ nếu có
-if PlayerGui:FindFirstChild("BananaToggleUI") then
-    PlayerGui.BananaToggleUI:Destroy()
-end
+local enabled = false
 
--- ScreenGui
-local gui = Instance.new("ScreenGui")
-gui.Name = "BananaToggleUI"
+-- UI
+local gui = Instance.new("ScreenGui", player.PlayerGui)
 gui.ResetOnSpawn = false
-gui.Parent = PlayerGui
 
--- Main Frame
-local frame = Instance.new("Frame")
-frame.Parent = gui
-frame.Size = UDim2.fromScale(0.35, 0.2)
-frame.Position = UDim2.fromScale(0.325, 0.4)
-frame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-frame.BackgroundTransparency = 0.1
+local frame = Instance.new("Frame", gui)
+frame.Size = UDim2.new(0, 260, 0, 150)
+frame.Position = UDim2.new(0.5, -130, 0.5, -75)
+frame.BackgroundColor3 = Color3.fromRGB(20,20,20)
 frame.BorderSizePixel = 0
-frame.Visible = true
+Instance.new("UICorner", frame).CornerRadius = UDim.new(0,16)
 
--- Bo góc
-local corner = Instance.new("UICorner", frame)
-corner.CornerRadius = UDim.new(0, 20)
-
--- Title
-local title = Instance.new("TextLabel")
-title.Parent = frame
-title.Size = UDim2.fromScale(1, 0.4)
+local title = Instance.new("TextLabel", frame)
+title.Size = UDim2.new(1,0,0,40)
 title.BackgroundTransparency = 1
-title.Text = "🍀 x36luck"
-title.TextScaled = true
+title.Text = "🍀 x36 Luck"
 title.Font = Enum.Font.GothamBold
-title.TextColor3 = Color3.fromRGB(255, 221, 0)
+title.TextSize = 18
+title.TextColor3 = Color3.fromRGB(0,255,150)
 
--- Toggle Button
-local toggle = Instance.new("TextButton")
-toggle.Parent = frame
-toggle.Size = UDim2.fromScale(0.6, 0.35)
-toggle.Position = UDim2.fromScale(0.2, 0.5)
-toggle.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-toggle.Text = "ON"
-toggle.TextScaled = true
+local status = Instance.new("TextLabel", frame)
+status.Position = UDim2.new(0,0,0,45)
+status.Size = UDim2.new(1,0,0,25)
+status.BackgroundTransparency = 1
+status.Text = "Status: OFF"
+status.Font = Enum.Font.Gotham
+status.TextSize = 14
+status.TextColor3 = Color3.fromRGB(255,100,100)
+
+local toggle = Instance.new("TextButton", frame)
+toggle.Position = UDim2.new(0.2,0,1,-55)
+toggle.Size = UDim2.new(0.6,0,0,35)
+toggle.Text = "TURN ON"
 toggle.Font = Enum.Font.GothamBold
-toggle.TextColor3 = Color3.fromRGB(0, 255, 0)
+toggle.TextSize = 16
+toggle.BackgroundColor3 = Color3.fromRGB(50,50,50)
+toggle.TextColor3 = Color3.fromRGB(255,255,255)
 toggle.BorderSizePixel = 0
+Instance.new("UICorner", toggle).CornerRadius = UDim.new(1,0)
 
-local toggleCorner = Instance.new("UICorner", toggle)
-toggleCorner.CornerRadius = UDim.new(0, 15)
-
--- Trạng thái
-local enabled = true
-
+-- Toggle logic
 toggle.MouseButton1Click:Connect(function()
     enabled = not enabled
-    if enabled then
-        toggle.Text = "ON"
-        toggle.TextColor3 = Color3.fromRGB(0, 255, 0)
-    else
-        toggle.Text = "OFF"
-        toggle.TextColor3 = Color3.fromRGB(255, 0, 0)
-    end
-end)
 
--- Nút thu gọn (ẩn / hiện menu)
-local UserInputService = game:GetService("UserInputService")
-UserInputService.InputBegan:Connect(function(input, gpe)
-    if gpe then return end
-    if input.KeyCode == Enum.KeyCode.RightControl then
-        frame.Visible = not frame.Visible
+    if enabled then
+        status.Text = "Status: ON (x36)"
+        status.TextColor3 = Color3.fromRGB(0,255,150)
+        toggle.Text = "TURN OFF"
+        toggle.BackgroundColor3 = Color3.fromRGB(0,150,100)
+
+        StarterGui:SetCore("SendNotification",{
+            Title = "🍀 x36 Luck",
+            Text = "x36 Luck Activated!",
+            Duration = 3
+        })
+    else
+        status.Text = "Status: OFF"
+        status.TextColor3 = Color3.fromRGB(255,100,100)
+        toggle.Text = "TURN ON"
+        toggle.BackgroundColor3 = Color3.fromRGB(50,50,50)
+
+        StarterGui:SetCore("SendNotification",{
+            Title = "🍀 x36 Luck",
+            Text = "x36 Luck Disabled!",
+            Duration = 3
+        })
     end
 end)
