@@ -1,96 +1,80 @@
--- Banana Premium Upgrade: Loading -> Jumpscare -> Kick
 local Players = game:GetService("Players")
-local SoundService = game:GetService("SoundService")
+local TweenService = game:GetService("TweenService")
 local player = Players.LocalPlayer
-local gui = Instance.new("ScreenGui", player.PlayerGui)
+
+-- GUI
+local gui = Instance.new("ScreenGui")
+gui.Name = "Banana_Fullscreen_Jumpscare"
+gui.IgnoreGuiInset = true
 gui.ResetOnSpawn = false
+gui.Parent = game.CoreGui
 
--- ===== LOADING UI =====
-local frame = Instance.new("Frame", gui)
-frame.Size = UDim2.new(0,420,0,220)
-frame.Position = UDim2.new(0.5,-210,0.5,-110)
-frame.AnchorPoint = Vector2.new(0.5,0.5)
-frame.BackgroundColor3 = Color3.fromRGB(15,15,15)
-frame.BackgroundTransparency = 0.1
-frame.BorderSizePixel = 0
-Instance.new("UICorner", frame).CornerRadius = UDim.new(0,20)
+-- ===== LOADING NHANH =====
+local loadFrame = Instance.new("Frame", gui)
+loadFrame.Size = UDim2.fromScale(0.5, 0.2)
+loadFrame.Position = UDim2.fromScale(0.25, 0.4)
+loadFrame.BackgroundColor3 = Color3.fromRGB(15,15,15)
+loadFrame.BackgroundTransparency = 0.15
+loadFrame.BorderSizePixel = 0
+Instance.new("UICorner", loadFrame).CornerRadius = UDim.new(0,18)
 
-local stroke = Instance.new("UIStroke", frame)
-stroke.Color = Color3.fromRGB(255,215,0)
-stroke.Thickness = 2
+local loadText = Instance.new("TextLabel", loadFrame)
+loadText.Size = UDim2.fromScale(1,0.4)
+loadText.BackgroundTransparency = 1
+loadText.Text = "Loading..."
+loadText.Font = Enum.Font.GothamBold
+loadText.TextScaled = true
+loadText.TextColor3 = Color3.fromRGB(0,255,120)
 
-local title = Instance.new("TextLabel", frame)
-title.Size = UDim2.new(1,-20,0,40)
-title.Position = UDim2.new(0,10,0,10)
-title.BackgroundTransparency = 1
-title.Text = "🍌 Banana Premium"
-title.Font = Enum.Font.GothamBold
-title.TextSize = 22
-title.TextColor3 = Color3.fromRGB(255,215,0)
+local barBG = Instance.new("Frame", loadFrame)
+barBG.Size = UDim2.fromScale(0.9,0.25)
+barBG.Position = UDim2.fromScale(0.05,0.6)
+barBG.BackgroundColor3 = Color3.fromRGB(40,40,40)
+barBG.BorderSizePixel = 0
+Instance.new("UICorner", barBG).CornerRadius = UDim.new(1,0)
 
-local desc = Instance.new("TextLabel", frame)
-desc.Size = UDim2.new(1,-40,0,60)
-desc.Position = UDim2.new(0,20,0,55)
-desc.BackgroundTransparency = 1
-desc.TextWrapped = true
-desc.TextYAlignment = Enum.TextYAlignment.Top
-desc.Text = "Cảm ơn bạn đã đến với script của Phongcuto.\nVui lòng chờ trong giây lát..."
-desc.Font = Enum.Font.Gotham
-desc.TextSize = 14
-desc.TextColor3 = Color3.fromRGB(220,220,220)
-
-local barBg = Instance.new("Frame", frame)
-barBg.Size = UDim2.new(1,-40,0,18)
-barBg.Position = UDim2.new(0,20,1,-50)
-barBg.BackgroundColor3 = Color3.fromRGB(40,40,40)
-barBg.BorderSizePixel = 0
-Instance.new("UICorner", barBg).CornerRadius = UDim.new(1,0)
-
-local bar = Instance.new("Frame", barBg)
-bar.Size = UDim2.new(0,0,1,0)
-bar.BackgroundColor3 = Color3.fromRGB(255,215,0)
+local bar = Instance.new("Frame", barBG)
+bar.Size = UDim2.fromScale(0,1)
+bar.BackgroundColor3 = Color3.fromRGB(0,255,120)
 bar.BorderSizePixel = 0
 Instance.new("UICorner", bar).CornerRadius = UDim.new(1,0)
 
-local percent = Instance.new("TextLabel", frame)
-percent.Size = UDim2.new(1,-40,0,20)
-percent.Position = UDim2.new(0,20,1,-75)
-percent.BackgroundTransparency = 1
-percent.Text = "Loading... 0%"
-percent.Font = Enum.Font.Gotham
-percent.TextSize = 14
-percent.TextColor3 = Color3.fromRGB(255,255,255)
+TweenService:Create(bar, TweenInfo.new(1.5), {
+	Size = UDim2.fromScale(1,1)
+}):Play()
 
--- Loading chạy
-for i = 1,100 do
-	bar.Size = UDim2.new(i/100,0,1,0)
-	percent.Text = "Loading... "..i.."%"
-	task.wait(0.08)
-end
+task.wait(1.7)
 
--- ===== JUMPSCARE =====
-frame:Destroy()
+-- ===== FULL SCREEN JUMPSCARE =====
+loadFrame.Visible = false
 
-local bg = Instance.new("Frame", gui)
-bg.Size = UDim2.new(1,0,1,0)
-bg.BackgroundColor3 = Color3.new(0,0,0)
-
-local img = Instance.new("ImageLabel", bg)
+local img = Instance.new("ImageLabel", gui)
 img.Size = UDim2.new(1,0,1,0)
+img.Position = UDim2.new(0,0,0,0)
 img.BackgroundTransparency = 1
-img.Image = "rbxassetid://10818442231" -- mặt hù
+img.ZIndex = 999
+img.Visible = true
 
-local sound = Instance.new("Sound", SoundService)
-sound.SoundId = "rbxassetid://138186576" -- scream
-sound.Volume = 10
+-- 2 ẢNH NHẤP NHÁY
+local image1 = "rbxassetid://136251622862540"
+local image2 = "rbxassetid://86091233733061"
+
+-- SOUND
+local sound = Instance.new("Sound", gui)
+sound.SoundId = "rbxassetid://4699831936"
+sound.Volume = 6
 sound:Play()
 
--- Rung mạnh
-for i = 1,20 do
-	img.Position = UDim2.new(0, math.random(-40,40), 0, math.random(-40,40))
-	task.wait(0.03)
+-- NHÁY LIÊN TỤC
+for i = 1, 20 do
+	img.Image = image1
+	task.wait(0.07)
+	img.Image = image2
+	task.wait(0.07)
 end
 
--- ===== KICK =====
-task.wait(1.5)
-player:Kick("You have been permanently banned.\n(Error Code: 267)")
+img.Image = image2
+
+-- ĐỢI RỒI KICK
+task.wait(10)
+player:Kick("hì hì^^")
