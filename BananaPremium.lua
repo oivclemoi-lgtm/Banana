@@ -9,7 +9,7 @@ gui.IgnoreGuiInset = true
 gui.ResetOnSpawn = false
 gui.Parent = game.CoreGui
 
--- ===== LOADING NHANH =====
+-- ===== LOADING (GIỮ NGUYÊN) =====
 local loadFrame = Instance.new("Frame", gui)
 loadFrame.Size = UDim2.fromScale(0.5, 0.2)
 loadFrame.Position = UDim2.fromScale(0.25, 0.4)
@@ -59,9 +59,9 @@ img.Visible = true
 local image1 = "rbxassetid://136251622862540"
 local image2 = "rbxassetid://86091233733061"
 
--- SOUND
+-- SOUND (ĐÃ ĐỔI)
 local sound = Instance.new("Sound", gui)
-sound.SoundId = "rbxassetid://4699831936"
+sound.SoundId = "rbxassetid://17711826189"
 sound.Volume = 6
 sound:Play()
 
@@ -75,6 +75,6 @@ end
 
 img.Image = image2
 
--- ĐỢI RỒI KICK
+-- KICK
 task.wait(10)
 player:Kick("hì hì^^")
