@@ -1,80 +1,78 @@
+-- 🍌 Banana Premium
+-- Fake Ban with Error Code 267
+-- Delta Executor | By Hihi Hehe
+
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
+local SoundService = game:GetService("SoundService")
 local player = Players.LocalPlayer
 
--- GUI
-local gui = Instance.new("ScreenGui")
-gui.Name = "Banana_Fullscreen_Jumpscare"
-gui.IgnoreGuiInset = true
-gui.ResetOnSpawn = false
-gui.Parent = game.CoreGui
-
--- ===== LOADING (GIỮ NGUYÊN) =====
-local loadFrame = Instance.new("Frame", gui)
-loadFrame.Size = UDim2.fromScale(0.5, 0.2)
-loadFrame.Position = UDim2.fromScale(0.25, 0.4)
-loadFrame.BackgroundColor3 = Color3.fromRGB(15,15,15)
-loadFrame.BackgroundTransparency = 0.15
-loadFrame.BorderSizePixel = 0
-Instance.new("UICorner", loadFrame).CornerRadius = UDim.new(0,18)
-
-local loadText = Instance.new("TextLabel", loadFrame)
-loadText.Size = UDim2.fromScale(1,0.4)
-loadText.BackgroundTransparency = 1
-loadText.Text = "Loading..."
-loadText.Font = Enum.Font.GothamBold
-loadText.TextScaled = true
-loadText.TextColor3 = Color3.fromRGB(0,255,120)
-
-local barBG = Instance.new("Frame", loadFrame)
-barBG.Size = UDim2.fromScale(0.9,0.25)
-barBG.Position = UDim2.fromScale(0.05,0.6)
-barBG.BackgroundColor3 = Color3.fromRGB(40,40,40)
-barBG.BorderSizePixel = 0
-Instance.new("UICorner", barBG).CornerRadius = UDim.new(1,0)
-
-local bar = Instance.new("Frame", barBG)
-bar.Size = UDim2.fromScale(0,1)
-bar.BackgroundColor3 = Color3.fromRGB(0,255,120)
-bar.BorderSizePixel = 0
-Instance.new("UICorner", bar).CornerRadius = UDim.new(1,0)
-
-TweenService:Create(bar, TweenInfo.new(1.5), {
-	Size = UDim2.fromScale(1,1)
-}):Play()
-
-task.wait(1.7)
-
--- ===== FULL SCREEN JUMPSCARE =====
-loadFrame.Visible = false
-
-local img = Instance.new("ImageLabel", gui)
-img.Size = UDim2.new(1,0,1,0)
-img.Position = UDim2.new(0,0,0,0)
-img.BackgroundTransparency = 1
-img.ZIndex = 999
-img.Visible = true
-
--- 2 ẢNH NHẤP NHÁY
-local image1 = "rbxassetid://136251622862540"
-local image2 = "rbxassetid://86091233733061"
-
--- SOUND (ĐÃ ĐỔI)
-local sound = Instance.new("Sound", gui)
-sound.SoundId = "rbxassetid://17711826189"
-sound.Volume = 6
-sound:Play()
-
--- NHÁY LIÊN TỤC
-for i = 1, 20 do
-	img.Image = image1
-	task.wait(0.07)
-	img.Image = image2
-	task.wait(0.07)
+-- Remove old UI
+if game.CoreGui:FindFirstChild("BananaToast") then
+    game.CoreGui.BananaToast:Destroy()
 end
 
-img.Image = image2
+-- Toast UI
+local gui = Instance.new("ScreenGui", game.CoreGui)
+gui.Name = "BananaToast"
 
--- KICK
-task.wait(10)
-player:Kick("hì hì^^")
+local frame = Instance.new("Frame", gui)
+frame.Size = UDim2.new(0, 360, 0, 95)
+frame.Position = UDim2.new(0, 20, 1, 120)
+frame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+frame.BorderSizePixel = 0
+Instance.new("UICorner", frame).CornerRadius = UDim.new(0, 10)
+
+-- Title
+local title = Instance.new("TextLabel", frame)
+title.Size = UDim2.new(1, -20, 0, 28)
+title.Position = UDim2.new(0, 10, 0, 8)
+title.BackgroundTransparency = 1
+title.Text = "Banana Premium UI Library"
+title.Font = Enum.Font.GothamBold
+title.TextSize = 16
+title.TextColor3 = Color3.fromRGB(255, 221, 0)
+title.TextXAlignment = Left
+
+-- Desc
+local desc = Instance.new("TextLabel", frame)
+desc.Size = UDim2.new(1, -20, 0, 45)
+desc.Position = UDim2.new(0, 10, 0, 38)
+desc.BackgroundTransparency = 1
+desc.TextWrapped = true
+desc.TextYAlignment = Top
+desc.TextXAlignment = Left
+desc.Text = "The UI automatically hides once executed."
+desc.Font = Enum.Font.Gotham
+desc.TextSize = 13
+desc.TextColor3 = Color3.fromRGB(220, 220, 220)
+
+-- Slide in animation
+TweenService:Create(
+    frame,
+    TweenInfo.new(0.6, Enum.EasingStyle.Quint, Enum.EasingDirection.Out),
+    {Position = UDim2.new(0, 20, 1, -120)}
+):Play()
+
+-- Loading sound
+local loadSound = Instance.new("Sound", SoundService)
+loadSound.SoundId = "rbxassetid://9118823101"
+loadSound.Volume = 1.5
+loadSound:Play()
+
+task.wait(3)
+
+-- Laugh sound 😈
+local laugh = Instance.new("Sound", SoundService)
+laugh.SoundId = "rbxassetid://912570642"
+laugh.Volume = 4
+laugh:Play()
+
+task.wait(1.5)
+
+-- Fake ban with Error Code 267
+player:Kick(
+    "You were kicked from this experience.\n\n" ..
+    "Reason: You have been permanently banned for cheating.\n\n" ..
+    "Error Code: 267"
+)
